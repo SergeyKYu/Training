@@ -22,7 +22,8 @@ pd.set_option('display.max_columns', None)
 titanic_data = pd.read_csv('train.csv', index_col='PassengerId')
 titanic_test = pd.read_csv('test.csv', index_col='PassengerId')
 
-print(titanic_data.head())
+print(titanic_data.info())
+print(titanic_test.info())
 #print(titanic_data.isnull().sum())
 X = titanic_data.drop(['Survived', 'Name', 'Ticket', 'Cabin'], axis=1)#
 Y_train = titanic_data.Survived
