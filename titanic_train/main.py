@@ -30,14 +30,14 @@ Y_train = titanic_data.Survived
 X = pd.get_dummies(X)
 X_train = X.fillna({'Age': X.Age.median()})
 print(X.head())
-# X_test = titanic_test.drop(['Name', 'Ticket', 'Cabin'], axis=1)
-# X_test = pd.get_dummies(X_test)
-# X_test = X_test.fillna({'Age': X_test.Age.median()})
-# X_test = X_test.fillna({'Fare': X_test.Fare.median()})
+X_test = titanic_test.drop(['Name', 'Ticket', 'Cabin'], axis=1)
+X_test = pd.get_dummies(X_test)
+X_test = X_test.fillna({'Age': X_test.Age.median()})
+X_test = X_test.fillna({'Fare': X_test.Fare.median()})
 #
 # print(X_test.isnull().sum())
 
-X_train, X_test, Y_train, Y_test = train_test_split(X_train, Y_train, test_size=0.33, random_state=42)
+# X_train, X_test, Y_train, Y_test = train_test_split(X_train, Y_train, test_size=0.33, random_state=42)
 
 
 
@@ -48,7 +48,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(X_train, Y_train, test_size=
 # print(grid_search_cv_clf.best_params_)
 # best_clf = grid_search_cv_clf.best_estimator_
 
-rf = RandomForestClassifier(criterion='entropy', max_depth=6, n_estimators=93)
+rf = RandomForestClassifier(criterion='entropy', max_depth=6, n_estimators=95)
 # parametrs = {'n_estimators': range(30, 100, 3), 'criterion': ['gini', 'entropy'], 'max_depth': range(1, 30)}
 # grid_search_cv_clf = GridSearchCV(rf, parametrs, cv=5)
 # grid_search_cv_clf.fit(X_train, Y_train)
@@ -58,16 +58,16 @@ rf = RandomForestClassifier(criterion='entropy', max_depth=6, n_estimators=93)
 rf.fit(X_train, Y_train)
 best_clf = rf
 
-print('score', best_clf.score(X_test, Y_test))
-print('cross_val_score', cross_val_score(best_clf, X_test, Y_test).mean())
-
-print(cross_val_score(best_clf, X_test, Y_test).mean())
+# print('score', best_clf.score(X_test, Y_test))
+# print('cross_val_score', cross_val_score(best_clf, X_test, Y_test).mean())
+#
+# print(cross_val_score(best_clf, X_test, Y_test).mean())
 y_pred = best_clf.predict(X_test)
-print(accuracy_score(Y_test, y_pred))
-# Submission = pd.DataFrame({'Survived': y_pred})
-# Submission.index = X_test.index
-# print(Submission.head())
-# Submission.to_csv('Submission.csv')
+# print(accuracy_score(Y_test, y_pred))
+Submission = pd.DataFrame({'Survived': y_pred})
+Submission.index = X_test.index
+print(Submission.head())
+Submission.to_csv('Submission.csv')
 
 
 print('prcision:', precision_score(Y_test, y_pred), 'recall:', recall_score(Y_test, y_pred))
